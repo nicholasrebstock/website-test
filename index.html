@@ -8,7 +8,15 @@
 <body>
     <h1 id="text">words</h1>
     <script>
-        src = "script.js"
+        let mText = document.getElementById("text");
+        var d = new Date();
+        let start = d.getTime();
+        let now;
+        setInterval(function() {
+            d = new Date();
+            now = d.getTime();
+            mText.innerText = (now - start)/1000;
+        }, 1000) 
     </script>
 </body>
 

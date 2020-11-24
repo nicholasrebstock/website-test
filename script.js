@@ -1,4 +1,4 @@
-let mText = document.getElementById("demo");
+let mText = document.getElementById("text");
 
 setInterval(function() {
     var d = new Date();
