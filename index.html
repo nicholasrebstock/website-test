@@ -10,23 +10,27 @@
     <!--Add buttons to initiate auth sequence and sign out-->
     <button id="authorize_button" style="display: none;">Authorize</button>
     <button id="signout_button" style="display: none;">Sign Out</button>
+    <button id="request_button" style="display: block;">Make API Request</button>
+
+    
 
     <pre id="content" style="white-space: pre-wrap;"></pre>
 
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
-      var CLIENT_ID = '85046939375-qj41e7blc7kp67jl3ks14stpl60hipqu.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyABHkmXIYXVYxFAlfkKIZG2xmnM-YrZzM8';
+      var CLIENT_ID = '302494642574-e8cfvpm0qp8o7l4lq00d2pfmtppbe502.apps.googleusercontent.com';
+      var API_KEY = 'AIzaSyD2DbHSa5pu0wOg0DR1r0-o5ijNVjgNfbU';
 
       // Array of API discovery doc URLs for APIs used by the quickstart
       var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+      var SCOPES = "https://www.googleapis.com/auth/calendar";
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
+      var requestButton = document.getElementById('request_button');
 
       /**
        *  On load, called to load the auth2 library and API client library.
@@ -53,6 +57,7 @@
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
+          requestButton.onclick = handleRequestClick;
         }, function(error) {
           appendPre(JSON.stringify(error, null, 2));
         });
@@ -85,6 +90,19 @@
        */
       function handleSignoutClick(event) {
         gapi.auth2.getAuthInstance().signOut();
+      }
+
+      function handleRequestClick(event) {
+        gapi.client.request({path: "https://www.googleapis.com/calendar/v3/users/me/calendarList", method: "GET"})
+          .then(onFulfilled, onRejected)
+      }
+
+      function onFulfilled(response) {
+        console.log(response);
+      }
+
+      function onRejected(reason) {
+        console.log(reason);
       }
 
       /**
